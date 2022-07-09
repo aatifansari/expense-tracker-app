@@ -19,5 +19,13 @@ public class User {
 	private String password;
 	private String DOB;
 	private Integer age;
+	
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", DOB=" + DOB + ", age=" + age + "]";
+	}
+	
+	
 
 }

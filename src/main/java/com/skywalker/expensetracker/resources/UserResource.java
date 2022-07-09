@@ -48,7 +48,7 @@ public class UserResource {
 		System.out.println(userMap);
 		
 		User user = userService.registerUser(firstName, lastName, email, password, DOB);
-		
+		 
 		System.out.println(user);
 		
 		return new ResponseEntity<>(generateJWTToken(user), HttpStatus.OK);

@@ -51,7 +51,8 @@ public class UserRepositoryImpl implements UserRepository {
 				
 			}, keyHolder);
 			
-			return (Integer) keyHolder.getKeys().get("USER_ID");
+			return (Integer) keyHolder.getKey().intValue();
+			//return (Integer) keyHolder.getKeys().get("USER_ID");
 			
 		}catch(Exception ex) {
 			

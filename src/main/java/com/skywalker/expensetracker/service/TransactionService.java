@@ -16,7 +16,7 @@ public interface TransactionService {
 	Transaction addTransaction(Integer userId, Integer categoryId, Double amount, String note,
 			Long transactionDate) throws EtBadRequestException;
 	
-	void updateTransaction(Integer userId, Integer categoryId, Integer tranactionId, Transaction transaction)
+	Transaction updateTransaction(Integer userId, Integer categoryId, Integer tranactionId, Transaction transaction)
 	                 throws EtBadRequestException;
 	
 	void removeTransaction(Integer userId, Integer categoryId, Integer transactionId) throws EtResourceNotFoundException;

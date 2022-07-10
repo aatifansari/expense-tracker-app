@@ -22,15 +22,18 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 			+ "AND CATEGORY_ID = ? AND TRANSACTION_ID = ?";
 	private static final String SQL_CREATE = "INSERT INTO TRANSACTIONS (USER_ID, CATEGORY_ID, "
 			+ "AMOUNT, NOTE, TRANSACTION_DATE) VALUES (?, ?, ?, ?, ?)";
-	
+	private static final String SQL_FIND_ALL = "SELECT * FROM TRANSACTIONS WHERE USER_ID = ? " + "AND CATEGORY_ID = ?";
+	private static final String SQL_UPDATE = " UPDATE TRANSACTIONS SET AMOUNT = ?, NOTE = ?, "
+			+ "TRANSACTION_DATE = ? WHERE USER_ID = ? AND CATEGORY_ID = ? AND TRANSACTION_ID = ?";
+	private static final String SQL_DELETE = "DELETE FROM TRANSACTIONS WHERE USER_ID = ? AND CATEGORY_ID = ? AND TRANSACTION_ID = ?";
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
 	@Override
 	public List<Transaction> findAll(Integer userId, Integer categoryId) {
-		// TODO Auto-generated method stu
-		return null;
+		
+		return jdbcTemplate.query(SQL_FIND_ALL, transactionRowMapper, new Object[] {userId,categoryId});
 	}
 
 	@Override
@@ -49,14 +52,27 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 	@Override
 	public void update(Integer userId, Integer categoryId, Integer transactionId, Transaction transaction)
 			throws EtBadRequestException {
-		// TODO Auto-generated method stub
-
+		try {
+			
+			jdbcTemplate.update(SQL_UPDATE, new Object[] { transaction.getAmount(), transaction.getNote(),
+					transaction.getTransactionDate(), userId, categoryId, transactionId });
+			
+		}catch(Exception ex) {
+			//throw ex;
+			throw  new EtBadRequestException("Transaction cannot be updated");
+		}
 	}
 
 	@Override
 	public void removeById(Integer userId, Integer categoryId, Integer transactionId)
 			throws EtResourceNotFoundException {
-		// TODO Auto-generated method stub
+		
+			int count = jdbcTemplate.update(SQL_DELETE, new Object[] { userId, categoryId, transactionId } );
+			
+			if(count==0) {
+				throw new EtResourceNotFoundException("Transaction not found");
+			}
+		
 
 	}
 

@@ -28,6 +28,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 			+ "C.CATEGORY_ID = T.CATEGORY_ID WHERE C.USER_ID = ? GROUP BY C.CATEGORY_ID";
 	private static final String SQL_UPDATE = "UPDATE CATEGORIES SET TITLE = ?, DESCRIPTION = ? "
 			+ "WHERE CATEGORY_ID = ? AND USER_ID = ?";
+	private static final String SQL_DELETE_CATEGORY = "DELETE FROM CATEGORIES WHERE USER_ID = ? AND CATEGORY_ID = ?";
+	private static final String SQL_DELETE_ALL_TRANSACTIONS = "DELETE FROM TRANSACTIONS WHERE CATEGORY_ID = ?"; 
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
@@ -95,8 +97,16 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
 	@Override
 	public void removeById(Integer userId, Integer categoryId) throws EtResourceNotFoundException {
-		// TODO Auto-generated method stub
-
+		this.removeAllCatTransactions(categoryId);
+		jdbcTemplate.update(SQL_DELETE_CATEGORY, new Object[] {userId, categoryId});
+		
+	}
+	
+	
+	private void removeAllCatTransactions(Integer categoryId) {
+		
+		jdbcTemplate.update(SQL_DELETE_ALL_TRANSACTIONS, new Object[] {categoryId});
+		
 	}
 	
 	

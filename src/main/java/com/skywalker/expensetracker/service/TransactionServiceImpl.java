@@ -21,14 +21,14 @@ public class TransactionServiceImpl implements TransactionService {
 	@Override
 	public List<Transaction> fetchAllTransactions(Integer userId, Integer categoryId) {
 		
-		return null;
+		return transactionRepository.findAll(userId, categoryId);
 	}
 
 	@Override
 	public Transaction fetchTransactionById(Integer userId, Integer categoryId, Integer transactionId)
 			throws EtResourceNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return transactionRepository.findById(userId, categoryId, transactionId);
 	}
 
 	@Override
@@ -39,17 +39,17 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public void updateTransaction(Integer userId, Integer categoryId, Integer tranactionId, Transaction transaction)
+	public Transaction updateTransaction(Integer userId, Integer categoryId, Integer tranactionId, Transaction transaction)
 			throws EtBadRequestException {
-		// TODO Auto-generated method stub
-		
-
+		transactionRepository.update(userId, categoryId, tranactionId, transaction);
+		return transactionRepository.findById(userId, categoryId, tranactionId);
 	}
 
 	@Override
 	public void removeTransaction(Integer userId, Integer categoryId, Integer transactionId)
 			throws EtResourceNotFoundException {
-		// TODO Auto-generated method stub
+		
+		transactionRepository.removeById(userId, categoryId, transactionId);
 
 	}
 

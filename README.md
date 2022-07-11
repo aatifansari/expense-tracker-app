@@ -6,12 +6,12 @@ Springboot project which exposes http endpoints to perform operations for expens
 ## Project Directory
 ![expense-tracker-api-project-directory](https://user-images.githubusercontent.com/44142827/178159807-16c2ecef-928b-4bac-bea5-f58b7ee6b3b7.PNG)
 
-## Database Schema [a relative link](expense-tracker-app-mysql-db-script.sql)
+## Database Schema [a relative link](Assets/expense-tracker-app-mysql-db-script.sql)
 - MySQL scripts is provided in ASSETS folder for quickly creating the database instance locally. User just need to run the script locally in MySQL console/workbench. Please configure the port as 3306 for database connection or provide the desired port in application.properties file spring.datasource.url peoperty.
 
 ![expense-tracker-app-database-schema](https://user-images.githubusercontent.com/44142827/178159836-b0224ba9-4ff7-4306-87c3-b6c7af1ce4af.PNG)
 
-## Postman API Collections [a relative link](Expense-Tracker-App.postman_collection)
+## Postman API Collections [a relative link](Assets/Expense-Tracker-App.postman_collection)
 Description
 - Provided Postman API collection in ASSETS/ folder for testing the API locally. 
 Note - There is no need to manually copy-paste JWT Token with each request for authentication as JS script is added in TESTS of Register/Login API which automatically fetch the TOKEN key in Postman environment and is being dynamically added as parameters in each request header. ## User just need to create an environment in Postman and you are Good to Go !!!

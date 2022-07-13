@@ -1,7 +1,17 @@
 # expense-tracker-app
 Restful-APIs for expense tracking application with JWT security.
 
-Springboot project which exposes http endpoints to perform operations for expense tracking application. Follows J2EE architectural design patterns and divided backend into resource, service and repository(dao) layer. Implemented payload validation using spring-boot-starter-validation and security using JWT authentication. Custom exception handling. Used JDBC Template to execute native sql queries on the MySQL database and defined ORM for specific usecases. Used Postman client to manually test the API. Maven used for build automation and Git for source version control.
+Springboot project to perform operations for expense tracking application. 
+- Followed J2EE architectural design patterns and divided backend into resource, service and repository(dao) layer. 
+- Enhanced security by avoiding taking userId from client instead set the attribute userId to HttpServletRequest during authentication for each request.
+- Implemented payload validation using spring-boot-starter-validation 
+- Made custom DTO for validation, security and avoid circular dependency in DBMS. 
+- Secured endpoints with JWT tokens. 
+- Custom exception handling. 
+- Used JDBC Template to execute native SQL queries on the MySQL database and defined ORM for specific use-cases. 
+- Lombok to avoid boilerplate code for setter, getter, constructor and object initialization using Builder. 
+- Made API collections and designed scripts in Postman for API testing. 
+- Maven used for build automation and Git for source version control.
 
 ## Project Directory
 ![expense-tracker-api-project-directory](https://user-images.githubusercontent.com/44142827/178159807-16c2ecef-928b-4bac-bea5-f58b7ee6b3b7.PNG)

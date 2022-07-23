@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Helper {
 	
-	public int findAge(String dob) {
+	public static int findAge(String dob) {
 		
 		// convert dob string to LocalDate
 		LocalDate theDOB = LocalDate.parse(dob);
@@ -16,7 +16,7 @@ public class Helper {
 		LocalDate currentDate = LocalDate.now();
 		
 		//find duration between dates
-		Period period = Period.between(theDOB, currentDate );
+		Period period = Period.between(theDOB, currentDate);
 		
 		return period.getYears();
 	}

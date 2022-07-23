@@ -19,9 +19,13 @@ public class TransactionServiceImpl implements TransactionService {
 	TransactionRepository transactionRepository;
 	
 	@Override
-	public List<Transaction> fetchAllTransactions(Integer userId, Integer categoryId) {
+	public List<Transaction> fetchAllTransactions(Integer userId, Integer categoryId, Integer pageNo, Integer pageSize) {
 		
-		return transactionRepository.findAll(userId, categoryId);
+		if(pageNo == null || pageSize == null) {
+			
+			return transactionRepository.findAll(userId, categoryId);
+		}
+		return transactionRepository.findAllPageable(userId, categoryId, pageNo, pageSize);
 	}
 
 	@Override

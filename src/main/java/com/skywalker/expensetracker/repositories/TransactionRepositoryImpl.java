@@ -1,6 +1,8 @@
 package com.skywalker.expensetracker.repositories;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -22,7 +24,10 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 			+ "AND CATEGORY_ID = ? AND TRANSACTION_ID = ?";
 	private static final String SQL_CREATE = "INSERT INTO TRANSACTIONS (USER_ID, CATEGORY_ID, "
 			+ "AMOUNT, NOTE, TRANSACTION_DATE) VALUES (?, ?, ?, ?, ?)";
+	private static final String SQL_COUNT = "SELECT COUNT(1) FROM TRANSACTIONS WHERE USER_ID = ? AND CATEGORY_ID = ?";
 	private static final String SQL_FIND_ALL = "SELECT * FROM TRANSACTIONS WHERE USER_ID = ? " + "AND CATEGORY_ID = ?";
+	private static final String SQL_FIND_PAGEABLE = "SELECT * FROM TRANSACTIONS WHERE USER_ID = ? "
+			+ "AND CATEGORY_ID = ? LIMIT ?, ?";
 	private static final String SQL_UPDATE = " UPDATE TRANSACTIONS SET AMOUNT = ?, NOTE = ?, "
 			+ "TRANSACTION_DATE = ? WHERE USER_ID = ? AND CATEGORY_ID = ? AND TRANSACTION_ID = ?";
 	private static final String SQL_DELETE = "DELETE FROM TRANSACTIONS WHERE USER_ID = ? AND CATEGORY_ID = ? AND TRANSACTION_ID = ?";
@@ -33,9 +38,16 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 	@Override
 	public List<Transaction> findAll(Integer userId, Integer categoryId) {
 		
-		return jdbcTemplate.query(SQL_FIND_ALL, transactionRowMapper, new Object[] {userId,categoryId});
+		return jdbcTemplate.query(SQL_FIND_ALL, transactionRowMapper, new Object[] {userId, categoryId});
 	}
+	
+	@Override
+	public List<Transaction> findAllPageable(Integer userId, Integer categoryId, Integer pageNo, Integer pageSize) {
 
+		//int total = jdbcTemplate.queryForObject(SQL_COUNT, new Object[] {userId, categoryId}, (rs,rowNum) -> rs.getInt(1));
+		return jdbcTemplate.query(SQL_FIND_PAGEABLE, transactionRowMapper, new Object[] {userId, categoryId, pageNo*pageSize, pageSize});
+	}
+	
 	@Override
 	public Transaction findById(Integer userId, Integer categoryId, Integer transactionId)
 			throws EtResourceNotFoundException {
@@ -72,13 +84,11 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 			if(count==0) {
 				throw new EtResourceNotFoundException("Transaction not found");
 			}
-		
-
 	}
 
 	@Override
 	public Integer create(Integer userId, Integer categoryId, Double amount, String note, Long transactionDate)
-			throws EtBadRequestException {
+			throws EtBadRequestException{
 		try {
 			
 			KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -97,7 +107,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 			return (Integer) keyHolder.getKey().intValue();
 			
 		}catch(Exception ex) {
-			throw ex;
+			throw new EtBadRequestException("Category Not Found");
 		}
 	}
 	
@@ -109,5 +119,5 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 				rs.getString("NOTE"),
 				rs.getLong("TRANSACTION_DATE"));
 	});
-
+	
 }

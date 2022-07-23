@@ -18,16 +18,11 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	UserRepository userRepository;
 	
-	@Autowired
-	Helper helper;
-	
 	@Override
 	public User validateUser(String email, String password) throws EtAuthException {
 		
 		if(email != null) email=email.toLowerCase();
-		
 		return userRepository.findByEmailAndPassword(email, password);
-		
 		
 	}
 	
@@ -43,17 +38,14 @@ public class UserServiceImpl implements UserService{
 			throw new EtAuthException("Invalid email format");
 		}
 		
-		
 		Integer count = userRepository.getCountByEmail(email);
 		if(count>0) {
 			throw new EtAuthException("Email already in use");
 		}
 		
 		//get age from dob
-		int age = helper.findAge(dob);
-		
+		int age = Helper.findAge(dob);
 		Integer userId = userRepository.create(firstName, lastName, password, email, dob, age);
-		
 		return userRepository.findByUserId(userId);
 		
 	}

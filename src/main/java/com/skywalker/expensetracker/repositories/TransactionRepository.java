@@ -9,6 +9,8 @@ import com.skywalker.expensetracker.exceptions.EtResourceNotFoundException;
 public interface TransactionRepository {
 	
 	List<Transaction> findAll(Integer userId, Integer categoryId);
+	
+	List<Transaction> findAllPageable(Integer userId, Integer categoryId, Integer pageNo, Integer pageSize);
 
 	Transaction findById(Integer userId, Integer categoryId, Integer transactionId) throws EtResourceNotFoundException;
 	

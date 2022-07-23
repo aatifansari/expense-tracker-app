@@ -8,7 +8,7 @@ import com.skywalker.expensetracker.exceptions.EtResourceNotFoundException;
 
 public interface TransactionService {
 	
-	List<Transaction> fetchAllTransactions(Integer userId, Integer categoryId);
+	List<Transaction> fetchAllTransactions(Integer userId, Integer categoryId, Integer pageNo, Integer pageSize);
 	
 	Transaction fetchTransactionById(Integer userId, Integer categoryId, Integer transactionId)
 	                   throws EtResourceNotFoundException;

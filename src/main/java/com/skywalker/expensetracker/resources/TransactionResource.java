@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skywalker.expensetracker.domain.Transaction;
@@ -30,9 +32,12 @@ public class TransactionResource {
 	
 	@GetMapping("")
 	public ResponseEntity<List<Transaction>> getAllTransaction(HttpServletRequest request,
-			                 @PathVariable("categoryId") Integer categoryId){
+			                 @PathVariable("categoryId") @Valid Integer categoryId,
+			                 @RequestParam(name = "pageNo", required = false) Integer pageNo,
+			                 @RequestParam(name = "pageSize", required = false) Integer pageSize){
+		                     
 		int userId = (Integer) request.getAttribute("userId");
-		List<Transaction> transactions = transactionService.fetchAllTransactions(userId, categoryId);
+		List<Transaction> transactions = transactionService.fetchAllTransactions(userId, categoryId, pageNo, pageSize);
 		
 		return new ResponseEntity(transactions, HttpStatus.OK);
 	}

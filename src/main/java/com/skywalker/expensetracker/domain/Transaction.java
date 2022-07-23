@@ -1,5 +1,7 @@
 package com.skywalker.expensetracker.domain;
 
+import org.springframework.data.annotation.CreatedDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

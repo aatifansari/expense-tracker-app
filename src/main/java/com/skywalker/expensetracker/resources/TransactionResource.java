@@ -102,9 +102,20 @@ public class TransactionResource {
 		Map<String, Boolean> map = new HashMap<>();
 		map.put("Success", true);
 		
-		return new ResponseEntity<>(map, HttpStatus.OK);
-		
+		return new ResponseEntity<>(map, HttpStatus.OK);		
 	}
+	
+	@GetMapping("/query")
+	public ResponseEntity<List<Transaction>> getTransactionByCategoryName(HttpServletRequest request,
+			@RequestParam(name ="categoryName", required=false) String categoryName){
+		
+		int userId = (Integer) request.getAttribute("userId");
+		
+		List<Transaction> transactions = transactionService.getTransactionByCategoryName(categoryName, userId);
+		
+		return new ResponseEntity<>(transactions, HttpStatus.OK);
+		
+	} 
 			                           
 
 }

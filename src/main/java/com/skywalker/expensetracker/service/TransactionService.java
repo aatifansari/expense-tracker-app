@@ -21,4 +21,6 @@ public interface TransactionService {
 	
 	void removeTransaction(Integer userId, Integer categoryId, Integer transactionId) throws EtResourceNotFoundException;
 	
+	List<Transaction> getTransactionByCategoryName(String categoryName, Integer userId) throws EtResourceNotFoundException;
+	
 }

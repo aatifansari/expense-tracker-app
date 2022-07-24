@@ -31,6 +31,8 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 	private static final String SQL_UPDATE = " UPDATE TRANSACTIONS SET AMOUNT = ?, NOTE = ?, "
 			+ "TRANSACTION_DATE = ? WHERE USER_ID = ? AND CATEGORY_ID = ? AND TRANSACTION_ID = ?";
 	private static final String SQL_DELETE = "DELETE FROM TRANSACTIONS WHERE USER_ID = ? AND CATEGORY_ID = ? AND TRANSACTION_ID = ?";
+	private static final String SQL_FIND_BY_CATEGORYNAME = "SELECT t.* FROM TRANSACTIONS t JOIN CATEGORIES c ON "
+			+ "t.CATEGORY_ID=c.CATEGORY_ID WHERE c.TITLE LIKE ? AND t.USER_ID=?";
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
@@ -119,5 +121,12 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 				rs.getString("NOTE"),
 				rs.getLong("TRANSACTION_DATE"));
 	});
+
+	@Override
+	public List<Transaction> findByCategoryName(String categoryName, Integer userId) {
+		
+		categoryName = categoryName+'%';
+		return jdbcTemplate.query(SQL_FIND_BY_CATEGORYNAME, transactionRowMapper, new Object[] {categoryName, userId});
+	}
 	
 }

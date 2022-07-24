@@ -21,5 +21,7 @@ public interface TransactionRepository {
 			throws EtBadRequestException;
 
 	void removeById(Integer userId, Integer categoryId, Integer transactionId) throws EtResourceNotFoundException;
+	
+	List<Transaction> findByCategoryName(String categoryName, Integer userId);
 
 }

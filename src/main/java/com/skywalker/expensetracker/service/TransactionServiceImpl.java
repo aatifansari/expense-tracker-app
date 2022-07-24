@@ -57,4 +57,11 @@ public class TransactionServiceImpl implements TransactionService {
 
 	}
 
+	@Override
+	public List<Transaction> getTransactionByCategoryName(String categoryName, Integer userId)
+			throws EtResourceNotFoundException {
+		return transactionRepository.findByCategoryName(categoryName, userId);
+	}
+	
+
 }

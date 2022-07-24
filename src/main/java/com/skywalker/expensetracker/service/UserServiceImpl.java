@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService{
 		
 		if(email != null) email=email.toLowerCase();
 		return userRepository.findByEmailAndPassword(email, password);
-		
 	}
 	
 	@Override
@@ -37,7 +36,6 @@ public class UserServiceImpl implements UserService{
 		if(!pattern.matcher(email).matches()) {
 			throw new EtAuthException("Invalid email format");
 		}
-		
 		Integer count = userRepository.getCountByEmail(email);
 		if(count>0) {
 			throw new EtAuthException("Email already in use");
@@ -47,7 +45,6 @@ public class UserServiceImpl implements UserService{
 		int age = Helper.findAge(dob);
 		Integer userId = userRepository.create(firstName, lastName, password, email, dob, age);
 		return userRepository.findByUserId(userId);
-		
 	}
 
 }

@@ -20,11 +20,8 @@ public class UserRepositoryImpl implements UserRepository {
 	
 	private static final String SQL_CREATE = "INSERT INTO USERS( FIRST_NAME, LAST_NAME,"
 			+ " EMAIL, PASSWORD, AGE, DOB) VALUES (?, ?, ?, ?, ?, ?)";
-	
 	private static final String SQL_COUNT_BY_EMAIL = "SELECT COUNT(*) FROM USERS WHERE EMAIL=?";
-	
 	private static final String SQL_FIND_BY_ID = "SELECT * FROM USERS WHERE USER_ID = ?";
-	
 	private static final String SQL_FIND_BY_EMAIL = "SELECT USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, AGE, DOB "
 			+ "FROM USERS WHERE EMAIL=?";
 	
@@ -39,7 +36,6 @@ public class UserRepositoryImpl implements UserRepository {
 		try {
 			KeyHolder keyHolder = new GeneratedKeyHolder();
 			jdbcTemplate.update(connection -> {
-				
 				PreparedStatement ps = connection.prepareStatement(SQL_CREATE, Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, firstName);
 				ps.setString(2, lastName);
@@ -48,17 +44,12 @@ public class UserRepositoryImpl implements UserRepository {
 				ps.setInt(5, age);
 				ps.setString(6,  DOB);
 				return ps;
-				
 			}, keyHolder);
-			
 			return (Integer) keyHolder.getKey().intValue();
-			//return (Integer) keyHolder.getKeys().get("USER_ID");
 			
 		}catch(Exception ex) {
-			
 			throw new EtAuthException("Invalid details. Failed to create account");
 		}
-
 	}
 
 	@Override
@@ -71,16 +62,12 @@ public class UserRepositoryImpl implements UserRepository {
 		}catch(EmptyResultDataAccessException e) {
 			throw new EtAuthException("Invalid email or password");
 		}
-		
 	}
 
 	@Override
 	public Integer getCountByEmail(String email) {
 		
 		return jdbcTemplate.queryForObject(SQL_COUNT_BY_EMAIL, Integer.class, new Object[] {email});
-		
-		
-
 	}
 
 	@Override

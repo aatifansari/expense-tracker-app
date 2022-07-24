@@ -32,9 +32,7 @@ public class CategoryResource {
 	public ResponseEntity<List<Category>> getAllCategories(HttpServletRequest request) {
 		
 		int userId = (Integer) request.getAttribute("userId");
-		
 		List<Category> categories = categoryService.fetchAllCategories(userId);
-		
 		return new ResponseEntity<>(categories, HttpStatus.OK);
 	}
 	
@@ -43,7 +41,6 @@ public class CategoryResource {
 		
 		int userId = (Integer) request.getAttribute("userId");
 		Category category = categoryService.fetchCategoryById(userId, categoryId);
-		
 		return new ResponseEntity<>(category, HttpStatus.OK);
 	}
 	
@@ -54,9 +51,7 @@ public class CategoryResource {
 		int userId = (Integer) request.getAttribute("userId");
 		String title = (String) categoryMap.get("title");
 		String description = (String) categoryMap.get("description");
-		
 		Category category = categoryService.addCategory(userId, title, description);
-		
 		return new ResponseEntity<>(category, HttpStatus.CREATED);
 		
 	}
@@ -67,11 +62,8 @@ public class CategoryResource {
 		
 		int userId = (Integer) request.getAttribute("userId");
 		int categoryId = (Integer) category.getCategoryId();
-		
 		Category updatedCategory = categoryService.updateCategory(userId, categoryId, category);
-		
 		return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
-		
 	}
 	
 	@DeleteMapping("/{categoryId}")
@@ -80,11 +72,8 @@ public class CategoryResource {
 		
 		int userId = (Integer) request.getAttribute("userId");
 		categoryService.removeCategoryWithAllTransaction(userId, categoryId);
-		
 		Map<String, Boolean> map = new HashMap<>();
 		map.put("Success", true);
-		
 		return new ResponseEntity(map, HttpStatus.OK);
 	}
-	
 }

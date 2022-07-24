@@ -30,7 +30,6 @@ public class AuthFilter extends GenericFilterBean{
 		if(authHeader != null) {
 			String[] authHeaderArr = authHeader.split("Bearer ");
 			if(authHeaderArr.length>1 && authHeaderArr[1] !=null) {
-				
 				String token = authHeaderArr[1];
 				try {
 					Claims claims = Jwts.parser().setSigningKey(Constants.API_SECRET_KEY)
@@ -51,8 +50,6 @@ public class AuthFilter extends GenericFilterBean{
 			httpResponse.sendError(HttpStatus.FORBIDDEN.value(), "Authorization token must be provided");
 			return;
 		}
-		
 		chain.doFilter(request, response);
 	}
-
 }

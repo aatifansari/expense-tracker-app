@@ -5,10 +5,25 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 
 @ResponseStatus(HttpStatus.UNAUTHORIZED)
+@SuppressWarnings("unused")
 public class EtAuthException extends RuntimeException{
+	
+	private static final long serialVersionUID = 1L;
+	
+	public EtAuthException() {
+		super();
+	}
 	
 	public EtAuthException(String message) {
 		super(message);
+	}
+	
+	public EtAuthException(String message, Throwable cause) {
+		super(message, cause);
+	}
+	
+	public EtAuthException(Throwable cause) {
+		super(cause);
 	}
 
 }

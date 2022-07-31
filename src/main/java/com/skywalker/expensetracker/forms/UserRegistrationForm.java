@@ -18,9 +18,6 @@ import lombok.ToString;
 @ToString
 public class UserRegistrationForm implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@NotBlank(message = "Firstname required")
@@ -37,8 +34,4 @@ public class UserRegistrationForm implements Serializable{
 	
 	@NotBlank(message = "Date of birth required")
 	private String dateOfBirth;
-	
-	
-	
-
 }

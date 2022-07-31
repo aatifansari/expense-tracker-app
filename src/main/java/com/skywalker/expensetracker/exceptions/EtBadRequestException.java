@@ -6,12 +6,22 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class EtBadRequestException extends RuntimeException{
 	
+	private static final long serialVersionUID = 1L;
+	
 	public EtBadRequestException() {
 		super();
 	}
 	
-	public EtBadRequestException(String msg) {
-		super(msg);
+	public EtBadRequestException(String message) {
+		super(message);
+	}
+	
+	public EtBadRequestException(String message, Throwable cause) {
+		super(message, cause);
+	}
+	
+	public EtBadRequestException(Throwable cause) {
+		super(cause);
 	}
 
 }
